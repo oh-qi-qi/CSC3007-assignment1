@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+
+    <!-- JQuery DataTable Css -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- BootStrap JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/dataTables.bootstrap.js"></script>
+
+
+    <title>PSI Readings</title>
+    <style>
+        nav {
+            background: #026AA6;
+        }
+
+        body {
+            background: #eaeaea;
+        }
+
+        .container-body {
+            margin: auto;
+            width: 90%;
+            padding: 10px;
+        }
+
+        .container-footer {
+            margin: auto;
+            width: 90%;
+            padding-left: 10px;
+            padding-top: 10px;
+            padding-bottom: 15px;
+        }
+
+        .page-footer {
+            background: #026AA6;
+        }
+
+        .table-card {
+            margin-bottom: -5px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav role="navigation">
+    </nav>
+    <div class="container-body">
+        <!-- Start of main body -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card table-card">
+                    <div class="header">
+                        <h2 id="psi-heading-timestamp"></h2>
+
+                    </div>
+                    <div class="body">
+                        <table id="table-main" class="table table-bordered table-striped table-hover centered responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>National</th>
+                                    <th>Central</th>
+                                    <th>West</th>
+                                    <th>East</th>
+                                    <th>North</th>
+                                    <th>South</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of mainbody -->
+
+    </div>
+
+    <footer class="page-footer">
+        <div class="container-footer">
+
+            Made by <a class="grey-text text-lighten-1" href="https://oh-qi-qi.github.io/CSC3007-assignment1/">Oh Qi Qi</a>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+
+            var table = $("#table-body");
+
+            $.ajax({
+                url: 'https://api.data.gov.sg/v1/environment/psi',
+                method: "GET",
+                data: $('#carparkDetails').serialize(),
+                dataType: "json", //to parse string into JSON object,
+                success: function(data) {
+                    //format the date
+                    var header_timestamp = document.getElementById("psi-heading-timestamp");
+                    header_timestamp.innerHTML =
+                        "PSI Readings for " + moment(data.items[0].update_timestamp).format("ddd DD MMM YYYY, HH:mm")
+
+                    var filtered_data = data.items[0].readings;
+
+                    for (let item in filtered_data) {
+                        console.log(item)
+                        var row = $('<tr><td>' + item + '</td><td>' +
+                            filtered_data[item].national + '</td><td>' +
+                            filtered_data[item].north + '</td><td>' +
+                            filtered_data[item].south + '</td><td>' +
+                            filtered_data[item].east + '</td><td>' +
+                            filtered_data[item].west + '</td><td>' +
+                            filtered_data[item].central + '</td></tr>');
+                        $('#table-main').append(row);
+                    }
+
+                    $('#table-main').DataTable({
+                        responsive: true,
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
