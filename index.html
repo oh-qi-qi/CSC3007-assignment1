@@ -117,8 +117,9 @@
                 success: function(data) {
                     //format the date
                     var header_timestamp = document.getElementById("psi-heading-timestamp");
-                    header_timestamp.innerHTML =
-                        "PSI Readings for " + moment(data.items[0].update_timestamp).format("ddd DD MMM YYYY, HH:mm")
+                    console.log(data.items[0].update_timestamp)
+                    var datetime = moment(data.items[0].update_timestamp).format("ddd DD MMM YYYY, HH:mm")
+                    header_timestamp.innerHTML = "PSI Readings for " + datetime
 
                     var filtered_data = data.items[0].readings;
 
