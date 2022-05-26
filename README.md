@@ -1,2 +1,2 @@
-# csc2005-lab03-2020
-https://oh-qi-qi.github.io/csc2005-lab03-2020/
+# CSC3007-assignment1
+https://oh-qi-qi.github.io/CSC3007-assignment1/
