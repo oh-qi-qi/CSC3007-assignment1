@@ -127,11 +127,11 @@
                         console.log(item)
                         var row = $('<tr><td>' + item + '</td><td>' +
                             filtered_data[item].national + '</td><td>' +
-                            filtered_data[item].north + '</td><td>' +
-                            filtered_data[item].south + '</td><td>' +
-                            filtered_data[item].east + '</td><td>' +
+                            filtered_data[item].central + '</td><td>' +
                             filtered_data[item].west + '</td><td>' +
-                            filtered_data[item].central + '</td></tr>');
+                            filtered_data[item].east + '</td><td>' +
+                            filtered_data[item].north + '</td><td>' +
+                            filtered_data[item].south + '</td></tr>');
                         $('#table-main').append(row);
                     }
 
