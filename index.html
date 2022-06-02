@@ -112,7 +112,7 @@
             $.ajax({
                 url: 'https://api.data.gov.sg/v1/environment/psi',
                 method: "GET",
-                data: $('#carparkDetails').serialize(),
+                data: $('#psiDetails').serialize(),
                 dataType: "json", //to parse string into JSON object,
                 success: function(data) {
                     //format the date
